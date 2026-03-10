@@ -1,0 +1,105 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{{ title }}</h1>
+
+<!-- Статистика -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3>{{ stats.total }}</h3>
+                <p>Всего обращений</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-warning text-dark">
+            <div class="card-body text-center">
+                <h3>{{ stats.new }}</h3>
+                <p>Ожидают ответа</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h3>{{ stats.resolved }}</h3>
+                <p>Решено</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Кнопка создания -->
+<a href="{% url 'shop:ticket_create' %}" class="btn btn-primary mb-4">
+    ✉️ Создать новое обращение
+</a>
+
+<!-- Список обращений -->
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Тема</th>
+                <th>Категория</th>
+                <th>Статус</th>
+                <th>Приоритет</th>
+                <th>Дата</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr class="{% if ticket.is_overdue %}table-warning{% endif %}">
+                <td>#{{ ticket.id }}</td>
+                <td>{{ ticket.subject }}</td>
+                <td>{{ ticket.get_category_display }}</td>
+                <td>
+                    <span class="badge bg-{% if ticket.status == 'new' %}warning{% elif ticket.status == 'resolved' %}success{% else %}info{% endif %}">
+                        {{ ticket.get_status_display }}
+                    </span>
+                </td>
+                <td>{{ ticket.get_priority_display }}</td>
+                <td>{{ ticket.created_at|date:"d.m.Y H:i" }}</td>
+                <td>
+                    <a href="{% url 'shop:ticket_detail' ticket.pk %}" class="btn btn-sm btn-outline-primary">
+                        Просмотр
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">У вас пока нет обращений</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Пагинация -->
+{% if is_paginated %}
+<nav>
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">← Назад</a>
+        </li>
+        {% endif %}
+        
+        <li class="page-item disabled">
+            <span class="page-link">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперёд →</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,189 @@
+<!-- shop/templates/shop/register.html -->
+{% extends 'shop/base.html' %}
+
+{% block title %}{{ title }} - Магазин{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Специфичные стили для страницы регистрации */
+    .auth-page {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: calc(100vh - 56px);
+    }
+    
+    .auth-card {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+    
+    .auth-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 20px 20px 0 0 !important;
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .btn-register {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 12px;
+        font-weight: 600;
+    }
+    
+    .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+            <div class="col-md-6 col-lg-5">
+                <div class="card auth-card">
+                    <!-- Заголовок карточки -->
+                    <div class="auth-header">
+                        <h2 class="mb-2">
+                            <i class="bi bi-person-plus"></i> Регистрация
+                        </h2>
+                        <p class="mb-0 opacity-75">Создайте аккаунт для покупок</p>
+                    </div>
+                    
+                    <!-- Тело карточки с формой -->
+                    <div class="card-body p-4">
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            
+                            <!-- Поле: Логин (username) -->
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.username.id_for_label }}">
+                                    {{ form.username.label }}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.username.errors %}
+                                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="form-text small">
+                                    {{ form.username.help_text }}
+                                </div>
+                            </div>
+                            
+                            <!-- Поле: Email -->
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.email.id_for_label }}">
+                                    {{ form.email.label }}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.email.errors %}
+                                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="form-text small">
+                                    {{ form.email.help_text }}
+                                </div>
+                            </div>
+                            
+                            <!-- Поле: Имя -->
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.first_name.id_for_label }}">
+                                    {{ form.first_name.label }}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.first_name.errors %}
+                                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Поле: Фамилия -->
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.last_name.id_for_label }}">
+                                    {{ form.last_name.label }}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.last_name.errors %}
+                                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Поле: Пароль -->
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ form.password1.id_for_label }}">
+                                    {{ form.password1.label }}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {{ form.password1 }}
+                                {% if form.password1.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.password1.errors %}
+                                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Поле: Подтверждение пароля -->
+                            <div class="mb-4">
+                                <label class="form-label" for="{{ form.password2.id_for_label }}">
+                                    {{ form.password2.label }}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {{ form.password2 }}
+                                {% if form.password2.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.password2.errors %}
+                                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Кнопка отправки -->
+                            <button type="submit" class="btn btn-register btn-primary w-100 mb-3">
+                                <i class="bi bi-check-circle"></i> Зарегистрироваться
+                            </button>
+                            
+                            <!-- Ссылка на вход -->
+                            <div class="text-center">
+                                <p class="mb-0 text-muted">
+                                    Уже есть аккаунт?
+                                    <a href="{% url 'shop:login' %}" class="text-decoration-none">
+                                        <strong>Войти</strong>
+                                    </a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

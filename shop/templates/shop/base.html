@@ -1,0 +1,214 @@
+<!-- shop/templates/shop/base.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Магазин{% endblock %}</title>
+    
+    <!-- Bootstrap CSS (подключаем через CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- Кастомные стили -->
+    <style>
+        /* Стили для навигации */
+        .navbar-brand { 
+            font-weight: bold; 
+            font-size: 1.5rem;
+        }
+        
+        /* Стили для карточек товаров */
+        .product-card { 
+            transition: transform 0.3s, box-shadow 0.3s; 
+        }
+        .product-card:hover { 
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Стили для сообщений */
+        .messages-container {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 1050;
+            min-width: 300px;
+        }
+        
+        /* Стили для страниц авторизации */
+        .auth-page {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .auth-card {
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- ═══════════════════════════════════════════════
+         НАВИГАЦИЯ
+         ═══════════════════════════════════════════════ -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <!-- Логотип / Название сайта -->
+            <a class="navbar-brand" href="{% url 'shop:home' %}">
+                🛒 Мой Магазин
+            </a>
+            
+            <!-- Кнопка гамбургер для мобильных -->
+            <button class="navbar-toggler" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Меню навигации -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Левая часть меню (основные ссылки) -->
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'shop:product_list' %}">
+                            <i class="bi bi-shop"></i> Товары
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'shop:category_list' %}">
+                            <i class="bi bi-grid"></i> Категории
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'shop:about' %}">
+                            <i class="bi bi-info-circle"></i> О нас
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'shop:contact' %}">
+                            <i class="bi bi-envelope"></i> Контакты
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Правая часть меню (авторизация и корзина) -->
+                <ul class="navbar-nav">
+                    <!-- Корзина (всегда видна) -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'shop:cart' %}">
+                            <i class="bi bi-cart"></i> Корзина
+                            <span id="cartCount" class="badge bg-danger">0</span>
+                        </a>
+                    </li>
+                    
+                    <!-- ПРОВЕРКА: Авторизован ли пользователь -->
+                    {% if user.is_authenticated %}
+                        <!-- ЕСЛИ АВТОРИЗОВАН: Показываем имя и меню аккаунта -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" 
+                               id="accountDropdown" role="button" 
+                               data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle"></i>
+                                {{ user.first_name|default:user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'shop:profile' %}">
+                                        <i class="bi bi-person"></i> Личный кабинет
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'shop:profile_edit' %}">
+                                        <i class="bi bi-pencil"></i> Редактировать профиль
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'shop:password_change' %}">
+                                        <i class="bi bi-key"></i> Сменить пароль
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'shop:logout' %}">
+                                        <i class="bi bi-box-arrow-right"></i> Выйти
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <!-- ЕСЛИ НЕ АВТОРИЗОВАН: Показываем кнопки входа/регистрации -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'shop:login' %}">
+                                <i class="bi bi-box-arrow-in-right"></i> Войти
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary btn-sm ms-2" href="{% url 'shop:register' %}">
+                                <i class="bi bi-person-plus"></i> Регистрация
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════
+         СООБЩЕНИЯ (FLASH MESSAGES)
+         ═══════════════════════════════════════════════ -->
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow" 
+             role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- ═══════════════════════════════════════════════
+         ОСНОВНОЙ КОНТЕНТ
+         ═══════════════════════════════════════════════ -->
+    <main class="{% if page_type != 'auth' %}container my-4{% endif %}">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ═══════════════════════════════════════════════
+         ФУТЕР
+         ═══════════════════════════════════════════════ -->
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-2">&copy; 2026 Мой Магазин. Все права защищены.</p>
+            <p class="mb-0 small text-muted">
+                Создано с помощью Django
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Кастомные скрипты -->
+    <script>
+        // Автоматическое скрытие сообщений через 5 секунд
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }, 5000);
+            });
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
