@@ -17,7 +17,6 @@ from django.core.mail import send_mail
 from django.conf import settings
 from datetime import timedelta
 from pytz import timezone
-import join
 
 from .models import Product, Category, Tag, ProductReview, SupportTicket, SupportTicketAttachment
 from .forms import (ProductReviewForm, 
