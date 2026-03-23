@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
+    "telegram_bot",
 ]
 
 MIDDLEWARE = [
@@ -170,3 +171,7 @@ SESSION_COOKIE_NAME = 'sessionid'
 
 #Довкренные источники
 CSRF_TRUSTED_ORIGNS = config('CSRF_TRUSTED_ORIGNS', default = '', cast=Csv())
+
+# TELEGRAM_BOT
+TELEGRAM_BOT_TOKEN = config('TELEGRAM_BOT_TOKEN', default='')
+TELEGRAM_ADMIN_IDS = config('TELEGRAM_ADMIN_IDS', default='', cast=Csv())
