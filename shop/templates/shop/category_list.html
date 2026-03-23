@@ -1,0 +1,103 @@
+<!-- shop/templates/shop/category_list.html -->
+{% extends 'shop/base.html' %}
+
+{% block title %}Все категории - Магазин{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="display-5 mb-3">
+                <i class="bi bi-grid"></i> Все категории
+            </h1>
+            <p class="lead text-muted">
+                Выберите категорию для просмотра товаров
+            </p>
+        </div>
+    </div>
+    
+    <!-- Сетка категорий -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for category in categories %}
+        <div class="col">
+            <div class="card h-100 shadow-sm hover-shadow">
+                <div class="card-body text-center">
+                    <!-- Иконка категории -->
+                    <div class="mb-3">
+                        <div class="rounded-circle bg-primary d-inline-flex 
+                                    align-items-center justify-content-center"
+                             style="width: 80px; height: 80px;">
+                            <i class="bi bi-folder text-white" style="font-size: 2rem;"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Название категории -->
+                    <h5 class="card-title mb-2">
+                        <a href="{% url 'shop:product_list_by_category' category.slug %}" 
+                           class="text-decoration-none text-dark">
+                            {{ category.name }}
+                        </a>
+                    </h5>
+                    
+                    <!-- Описание (если есть) -->
+                    {% if category.description %}
+                    <p class="card-text text-muted small">
+                        {{ category.description|truncatechars:100 }}
+                    </p>
+                    {% endif %}
+                    
+                    <!-- Количество товаров -->
+                    <p class="card-text">
+                        <span class="badge bg-secondary">
+                            {{ category.get_product_count }} товаров
+                        </span>
+                    </p>
+                    
+                    <!-- Кнопка -->
+                    <a href="{% url 'shop:product_list_by_category' category.slug %}" 
+                       class="btn btn-outline-primary mt-2">
+                        <i class="bi bi-shop"></i> Смотреть товары
+                    </a>
+                </div>
+                
+                <!-- Дата создания -->
+                <div class="card-footer text-muted small">
+                    <i class="bi bi-calendar"></i> 
+                    Создана: {{ category.created_at|date:"d.m.Y" }}
+                </div>
+            </div>
+        </div>
+        
+        {% empty %}
+        <!-- Если категорий нет -->
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <i class="bi bi-info-circle display-4"></i>
+                <h4 class="mt-3">Категорий пока нет</h4>
+                <p class="mb-0">Заходите позже!</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Кнопка назад -->
+    <div class="row mt-5">
+        <div class="col text-center">
+            <a href="{% url 'shop:home' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> На главную
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Эффект при наведении на карточку */
+    .hover-shadow {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+    }
+</style>
+{% endblock %}

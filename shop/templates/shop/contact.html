@@ -1,0 +1,75 @@
+<!-- shop/templates/shop/contact.html -->
+{% extends 'shop/base.html' %}
+
+{% block title %}{{ title }} - Магазин{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Заголовок -->
+            <h1 class="display-4 mb-4 text-center">{{ title }}</h1>
+            
+            <!-- Контактная информация -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-telephone"></i> Контакты</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <h6><i class="bi bi-envelope"></i> Email</h6>
+                            <p class="ms-4">{{ email|default:"support@example.com" }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h6><i class="bi bi-telephone"></i> Телефон</h6>
+                            <p class="ms-4">{{ phone|default:"+7 (123) 456-78-90" }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h6><i class="bi bi-clock"></i> Режим работы</h6>
+                            <p class="ms-4">Пн-Пт: 9:00 - 18:00<br>Сб-Вс: Выходной</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h6><i class="bi bi-geo-alt"></i> Адрес</h6>
+                            <p class="ms-4">г. Москва, ул. Примерная, д. 1</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Форма обратной связи -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="bi bi-chat"></i> Напишите нам</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Ваше имя</label>
+                            <input type="text" class="form-control" placeholder="Иван">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" placeholder="your@email.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Сообщение</label>
+                            <textarea class="form-control" rows="4" placeholder="Ваш вопрос..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send"></i> Отправить
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Кнопка назад -->
+            <div class="text-center mt-4">
+                <a href="{% url 'shop:home' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> На главную
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
