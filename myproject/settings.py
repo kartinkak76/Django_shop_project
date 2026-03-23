@@ -170,7 +170,7 @@ SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_NAME = 'sessionid'
 
 #Довкренные источники
-CSRF_TRUSTED_ORIGNS = config('CSRF_TRUSTED_ORIGNS', default = '', cast=Csv())
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
 
 # TELEGRAM_BOT
 TELEGRAM_BOT_TOKEN = config('TELEGRAM_BOT_TOKEN', default='')
