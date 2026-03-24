@@ -1,30 +1,83 @@
-{% extends 'shop/base.html'%}
-{% block title%} О нас - Магазин {% endblock%}
+<!-- shop/templates/shop/about.html -->
+{% extends 'shop/base.html' %}
+
+{% block title %}{{ title }} - Магазин{% endblock %}
+
 {% block content %}
-<div class='row'>
-    <div class="col-md-8 mx-auto">
-        <h1 class="md-4">О нас</h1>
-        <p class="lead">{{content}}</p>
-
-        <div class = "card mb-4">
-            <div class="card-body">
-                <h3>Наши ценности</h3>
-                <ul>
-                    <li>Качество</li>
-                    <li>Доступность</li>
-                    <li>Инновации</li>
-                </ul>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Заголовок -->
+            <h1 class="display-4 mb-4 text-center">{{ title }}</h1>
+            
+            <!-- Основной контент -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <p class="lead">{{ content }}</p>
+                    
+                    <hr class="my-4">
+                    
+                    <h3 class="mt-4">Наша история</h3>
+                    <p>
+                        Мы работаем с 2020 года и за это время обслужили тысячи довольных клиентов.
+                        Наша миссия — предоставлять качественные товары по доступным ценам.
+                    </p>
+                    
+                    <h3 class="mt-4">Наши ценности</h3>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle-fill text-success"></i> Качество продукции</li>
+                        <li><i class="bi bi-check-circle-fill text-success"></i> Доступные цены</li>
+                        <li><i class="bi bi-check-circle-fill text-success"></i> Быстрая доставка</li>
+                        <li><i class="bi bi-check-circle-fill text-success"></i> Отличная поддержка</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Команда -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Наша команда</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-3">
+                            <div class="rounded-circle bg-secondary d-inline-flex 
+                                        align-items-center justify-content-center mb-2"
+                                 style="width: 80px; height: 80px;">
+                                <span class="text-white fs-3">И</span>
+                            </div>
+                            <h6>Иван Петров</h6>
+                            <p class="text-muted small">Основатель</p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="rounded-circle bg-secondary d-inline-flex 
+                                        align-items-center justify-content-center mb-2"
+                                 style="width: 80px; height: 80px;">
+                                <span class="text-white fs-3">А</span>
+                            </div>
+                            <h6>Анна Сидорова</h6>
+                            <p class="text-muted small">Менеджер</p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="rounded-circle bg-secondary d-inline-flex 
+                                        align-items-center justify-content-center mb-2"
+                                 style="width: 80px; height: 80px;">
+                                <span class="text-white fs-3">О</span>
+                            </div>
+                            <h6>Олег Козлов</h6>
+                            <p class="text-muted small">Разработчик</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Кнопка назад -->
+            <div class="text-center mt-4">
+                <a href="{% url 'shop:home' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> На главную
+                </a>
             </div>
         </div>
-
-        <div class "card">
-            <div class"card-body">
-                <h3>Контакты</h3>
-                <p>Телефон: +7(999)999-99-99</p>
-                <p>Email: emailexample@example.com</p>
-            </div>
-        </div>
-    </div>        
+    </div>
 </div>
-
-{% endblock%}
+{% endblock %}
