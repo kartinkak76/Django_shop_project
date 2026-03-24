@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DATABASE_NAME'),
@@ -105,7 +105,13 @@ DATABASES = {
             'sslmode': 'require',  # Обязательно для Railway
         },
     }
-}
+}"""
+
+DATABASES = {
+    'default':{
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
+    }}
 
 
 
@@ -170,10 +176,7 @@ SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_NAME = 'sessionid'
 
 #Довкренные источники
-CSRF_TRUSTED_ORIGINS = [
-    'https://web-production-a61b3.up.railway.app',
-    'https://*.railway.app',
-]
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
 
 # TELEGRAM_BOT
 TELEGRAM_BOT_TOKEN = config('TELEGRAM_BOT_TOKEN', default='')
