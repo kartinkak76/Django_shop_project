@@ -219,7 +219,7 @@ def add_review(request, product_slug):
     
     return redirect('shop:product_detail', slug=product_slug)
 
-def about_page(request):
+def shopabout_page(request):
     """Страница 'О нас'"""
     return render(request, 'shop/shopabout.html',{
         'title': 'О нас',
