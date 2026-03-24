@@ -219,9 +219,9 @@ def add_review(request, product_slug):
     
     return redirect('shop:product_detail', slug=product_slug)
 
-def shopabout_page(request):
+def about_page(request):
     """Страница 'О нас'"""
-    return render(request, 'shop/shopabout.html',{
+    return render(request, 'shop/about.html',{
         'title': 'О нас',
         'content': 'Мы - лучший магазин в радиусе километра от вас'
     })
