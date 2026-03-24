@@ -170,7 +170,10 @@ SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_NAME = 'sessionid'
 
 #Довкренные источники
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-production-a61b3.up.railway.app',
+    'https://*.railway.app',
+]
 
 # TELEGRAM_BOT
 TELEGRAM_BOT_TOKEN = config('TELEGRAM_BOT_TOKEN', default='')
