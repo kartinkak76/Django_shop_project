@@ -18,6 +18,7 @@ from django.conf import settings
 from datetime import timedelta
 from pytz import timezone
 
+
 from .models import Product, Category, Tag, ProductReview, SupportTicket, SupportTicketAttachment
 from .forms import (ProductReviewForm, 
                     SupportTicketForm, 
