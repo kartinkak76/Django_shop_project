@@ -1,7 +1,7 @@
 """
 URL конфигурация для приложения shop
 """
-from django.urls import path
+from django.urls import path, include
 from . import views
 from . import views_auth
 
@@ -83,4 +83,7 @@ urlpatterns = [
     path('account/profile/edit/', views_auth.profile_edit_view, name='profile_edit'),
     # Смена пароля
     path('account/password/change/', views_auth.password_change_view, name='password_change'),
+
+    #telegram-bot
+    path('telegram/', include('telegram_bot.urls', namespace='telegram_bot')),
 ]

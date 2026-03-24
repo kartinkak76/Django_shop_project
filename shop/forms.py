@@ -310,7 +310,7 @@ class SupportTicketAttachmentForm(forms.ModelForm):
             allowed_extencions = ['.jpg', '.png', '.jpeg', '.gif', '.doc', '.docx']
             ext = file.name.split('.')[-1].lower()
             if f'.{ext}' not in allowed_extencions:
-                raise ValidationError(f'Недопустимый формат файла. Разрешены: {', '.join(allowed_extencions)}')
+                raise ValidationError(f'Недопустимый формат файла. Разрешены: {", ".join(allowed_extencions)}')
         
         return file
     
