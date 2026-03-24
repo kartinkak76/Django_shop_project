@@ -221,7 +221,7 @@ def add_review(request, product_slug):
 
 def about_page(request):
     """Страница 'О нас'"""
-    return render(request, 'shop/about.html',{
+    return render(request, 'shop/shopabout.html',{
         'title': 'О нас',
         'content': 'Мы - лучший магазин в радиусе километра от вас'
     })
